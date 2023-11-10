@@ -13,7 +13,7 @@ public class Request {
     @Id
     @GeneratedValue
     @Column(name = "request_id", nullable = false)
-    private int requestId;
+    private int id;
 
     @Column(name="username", nullable = false, length = 256, unique = true)
     @Setter
