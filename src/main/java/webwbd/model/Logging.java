@@ -34,4 +34,6 @@ public class Logging {
     @Getter
     @Setter
     private Date requestTime;
+
+    public Logging(){}
 }
