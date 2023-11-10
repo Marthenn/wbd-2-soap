@@ -13,11 +13,11 @@ public class Account {
     @Column(name = "uid", nullable = false)
     private int id;
 
-    @Column(name = "username", nullable = false, length = 256)
+    @Column(name = "username", nullable = false, length = 256, unique = true)
     @Setter
     private String username;
 
-    @Column(name = "password", nullable = false, length = 256)
+    @Column(name = "password", nullable = false, length = 256, unique = true)
     @Setter
     private String password;
 
