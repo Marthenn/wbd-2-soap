@@ -30,4 +30,6 @@ public class Request {
     @Column(name = "proof_directory", nullable = false)
     @Setter
     private String proofDirectory;
+
+    public Request(){}
 }
