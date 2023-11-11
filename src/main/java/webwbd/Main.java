@@ -1,16 +1,22 @@
 package webwbd;
 
+import webwbd.middleware.LoggerServlet;
 import webwbd.service.Service;
+import webwbd.util.HibernateUtil;
+
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.handler.Handler;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            // TODO: change this Endpoint publishing
-            Endpoint.publish("http://localhost:50345/ws/testing", new Service());
-            System.out.println("Server started");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        HibernateUtil.getSessionFactory();
+
+        Endpoint endpoint  = Endpoint.create(new Service());
+//        List<Handler> handlerChain = endpoint.getBinding().getHandlerChain();
+//        handlerChain.add(new LoggerServlet());
+//        endpoint.getBinding().setHandlerChain(handlerChain);
+
+        endpoint.publish("http://localhost:50435/api/Service");
     }
 }
