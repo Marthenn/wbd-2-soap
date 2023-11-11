@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  soap-service:
+    container_name: jax-ws-webwbd-2
+    build: .
+    ports:
+      - "8011:8010"
+    env_file: .env
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - soap-services
+  
+networks:
+  soap-services:
