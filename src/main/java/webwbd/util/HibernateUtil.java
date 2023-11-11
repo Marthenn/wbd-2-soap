@@ -1,6 +1,6 @@
 package webwbd.util;
 
-import com.mysql.cj.xdevapi.SessionFactory;
+import org.hibernate.SessionFactory;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
