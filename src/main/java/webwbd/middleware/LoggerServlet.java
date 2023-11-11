@@ -1,6 +1,6 @@
 package webwbd.middleware;
 
-import com.sun.xml.internal.ws.developer.JAXWSProperties;
+import com.sun.xml.ws.developer.JAXWSProperties;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import webwbd.model.Logging;
