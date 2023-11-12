@@ -44,7 +44,6 @@ public class RequestRepository {
 
             // TODO: add account exist here
 
-            session.beginTransaction();
             session.save(request);
             session.getTransaction().commit();
 
