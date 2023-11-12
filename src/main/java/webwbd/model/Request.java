@@ -32,5 +32,13 @@ public class Request {
     @Setter
     private String proofDirectory;
 
+    @Column(name = "status", nullable = false)
+    @Setter
+    private String status; // Pending, Approved, Declined
+
+    @Column(name = "description", nullable = true)
+    @Setter
+    private String description;
+
     public Request(){}
 }
