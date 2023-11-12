@@ -1,6 +1,7 @@
 package webwbd.service;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import webwbd.model.Request;
 import webwbd.repository.RequestRepository;
 
 import javax.jws.*;
@@ -16,5 +17,14 @@ public class Service {
             return "Not authorized";
         }
         return RequestRepository.createRequest(username, email, proofDirectory);
+    }
+
+    @WebMethod(operationName = "GetRequest")
+    public Request getRequest(@WebParam(name = "id") int id,
+                              @WebParam(name = "api_key") String apiKey) {
+        if(!apiKey.equals(Dotenv.load().get("SOAP_KEY"))) {
+            return null;
+        }
+        return RequestRepository.getRequest(id);
     }
 }
