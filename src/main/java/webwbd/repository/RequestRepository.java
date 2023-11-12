@@ -8,7 +8,7 @@ import webwbd.util.HibernateUtil;
 import java.util.Date;
 
 public class RequestRepository {
-    public String createRequest(String username, String email, String proofDirectory) {
+    public static String createRequest(String username, String email, String proofDirectory) {
         try {
             Request request = new Request();
             request.setUsername(username);
@@ -31,7 +31,7 @@ public class RequestRepository {
         }
     }
 
-    public String approveRequest(int id) {
+    public static String approveRequest(int id) {
         try {
             // TODO: implement approveRequest
             /*
@@ -45,7 +45,7 @@ public class RequestRepository {
         }
     }
 
-    public String declineRequest(int id) {
+    public static String declineRequest(int id) {
         try {
             // TODO: implement declineRequest
             /*
