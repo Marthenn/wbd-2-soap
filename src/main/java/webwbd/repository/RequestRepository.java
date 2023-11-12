@@ -23,7 +23,7 @@ public class RequestRepository {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
 
-            // check if username and email exists which means there's already a request
+            // check if username and email exists which means there's already a pending request
             session.beginTransaction();
             Request existingRequest = session.createQuery("from Request where username = :username or email = :email and status = :status", Request.class)
                     .setParameter("username", username)
@@ -31,7 +31,7 @@ public class RequestRepository {
                     .setParameter("status", "Pending")
                     .uniqueResult();
             if (existingRequest != null) {
-                return "Request already exists";
+                return "A pending request already exists";
             }
 
             // check account
@@ -88,6 +88,23 @@ public class RequestRepository {
             return "Request declined successfully";
         } catch (Exception e) {
             return "Failed to decline request";
+        }
+    }
+
+    public static Request getRequest(int id) {
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
+
+            session.beginTransaction();
+            Request request = session.createQuery("from Request where id = :id", Request.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+            session.getTransaction().commit();
+
+            return request;
+        } catch (Exception e) {
+            return null;
         }
     }
 }
