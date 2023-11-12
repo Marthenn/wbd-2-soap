@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        HibernateUtil.getSessionFactory();
+        HibernateUtil.getSessionFactory();
 
         Endpoint endpoint  = Endpoint.create(new Service());
-//        List<Handler> handlerChain = endpoint.getBinding().getHandlerChain();
-//        handlerChain.add(new LoggerServlet());
-//        endpoint.getBinding().setHandlerChain(handlerChain);
+        List<Handler> handlerChain = endpoint.getBinding().getHandlerChain();
+        handlerChain.add(new LoggerServlet());
+        endpoint.getBinding().setHandlerChain(handlerChain);
 
         endpoint.publish("http://localhost:50435/api/Service");
     }
