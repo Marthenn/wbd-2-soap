@@ -2,7 +2,6 @@ package webwbd.model;
 
 import lombok.Getter;
 
-import javax.xml.bind.annotation.XmlAccessorOrder;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
