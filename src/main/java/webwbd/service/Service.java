@@ -27,4 +27,13 @@ public class Service {
         }
         return RequestRepository.getRequest(id);
     }
+
+    @WebMethod(operationName = "GetRequestPage")
+    public Request[] getRequestPage(@WebParam(name = "page") int page,
+                                    @WebParam(name = "api_key") String apiKey) {
+        if(!apiKey.equals(Dotenv.load().get("SOAP_KEY"))) {
+            return null;
+        }
+        return RequestRepository.getRequestPage(page);
+    }
 }

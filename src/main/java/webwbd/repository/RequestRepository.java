@@ -10,6 +10,7 @@ import webwbd.util.HibernateUtil;
 import java.util.Date;
 
 public class RequestRepository {
+    private final static int PAGE_SIZE = 5;
     public static String createRequest(String username, String email, String proofDirectory) {
         try {
             Request request = new Request();
@@ -103,6 +104,25 @@ public class RequestRepository {
             session.getTransaction().commit();
 
             return request;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Request[] getRequestPage(int page) {
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
+
+            session.beginTransaction();
+            Request[] requests = session.createQuery("from Request where status = 'Pending'", Request.class)
+                    .setFirstResult((page - 1) * PAGE_SIZE)
+                    .setMaxResults(PAGE_SIZE)
+                    .list()
+                    .toArray(new Request[0]);
+            session.getTransaction().commit();
+
+            return requests;
         } catch (Exception e) {
             return null;
         }
