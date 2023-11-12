@@ -25,24 +25,32 @@ public class RequestRepository {
 
             // check if username and email exists which means there's already a request
             session.beginTransaction();
-            Request existingRequest = session.createQuery("from Request where username = :username or email = :email", Request.class)
+            Request existingRequest = session.createQuery("from Request where username = :username or email = :email and status = :status", Request.class)
                     .setParameter("username", username)
                     .setParameter("email", email)
+                    .setParameter("status", "Pending")
                     .uniqueResult();
             if (existingRequest != null) {
                 return "Request already exists";
             }
 
-            // check if username and email exists in account table and if it's admin
-            Account account = session.createQuery("from Account where username = :username or email = :email and isAdmin = True", Account.class)
+            // check account
+            Account account = session.createQuery("from Account where username = :username or email = :email", Account.class)
                     .setParameter("username", username)
                     .setParameter("email", email)
                     .uniqueResult();
-            if (account != null) {
-                return "An admin account with the same username or email already exists";
+            // if admin
+            if (account != null && account.isAdmin()) {
+                return "Admin cannot create request";
             }
-
-            // TODO: add account exist here
+            // if exist an account but with different email
+            if (account != null && !account.getEmail().equals(email)) {
+                return "Account with the specified username already exists with different email";
+            }
+            // if exist an account but with different username
+            if (account != null && !account.getUsername().equals(username)) {
+                return "Account with the specified email already exists with different username";
+            }
 
             session.save(request);
             session.getTransaction().commit();
