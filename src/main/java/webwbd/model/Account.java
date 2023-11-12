@@ -30,8 +30,14 @@ public class Account {
     @Setter
     private Date joinedDate;
 
+    @Column(name = "expired_date")
+    @Setter
+    private Date expiredDate;
+
     @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
 
-    public Account(){}
+
+    public Account(boolean isAdmin){this.isAdmin = isAdmin;}
+    public Account(){this.isAdmin = false;}
 }
