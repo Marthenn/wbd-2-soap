@@ -6,10 +6,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlType;
 
 @Getter
 @Entity
 @Table (name = "request")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Request", propOrder = {
+        "id",
+        "username",
+        "email",
+        "date",
+        "proofDirectory",
+        "status",
+        "description"
+})
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,15 +2,19 @@ package webwbd.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import webwbd.model.Request;
 import webwbd.model.Account;
+import webwbd.model.Request;
+import webwbd.model.RequestWrapper;
 import webwbd.util.EmailUtil;
 import webwbd.util.HibernateUtil;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class RequestRepository {
     private final static int PAGE_SIZE = 5;
+
     public static String createRequest(String username, String email, String proofDirectory) {
         try {
             Request request = new Request();
@@ -68,10 +72,10 @@ public class RequestRepository {
         try {
             // TODO: implement approveRequest
             /*
-            * 1. Request id sudah ada (dari parameter)
-            * 2. Set status request menjadi Approved
-            * 3. Set description jadi "Request approved by admin at {date}"
-            * */
+             * 1. Request id sudah ada (dari parameter)
+             * 2. Set status request menjadi Approved
+             * 3. Set description jadi "Request approved by admin at {date}"
+             * */
             return "Request approved successfully";
         } catch (Exception e) {
             return "Failed to approve request";
@@ -109,20 +113,20 @@ public class RequestRepository {
         }
     }
 
-    public static Request[] getRequestPage(int page) {
+    public static RequestWrapper getRequestPage(int page) {
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
 
             session.beginTransaction();
-            Request[] requests = session.createQuery("from Request where status = 'Pending'", Request.class)
+            List<Request> requests = Arrays.asList(session.createQuery("from Request where status = 'Pending'", Request.class)
                     .setFirstResult((page - 1) * PAGE_SIZE)
                     .setMaxResults(PAGE_SIZE)
                     .list()
-                    .toArray(new Request[0]);
+                    .toArray(new Request[0]));
             session.getTransaction().commit();
 
-            return requests;
+            return new RequestWrapper(requests);
         } catch (Exception e) {
             return null;
         }
