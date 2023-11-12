@@ -9,8 +9,8 @@ public class Service {
         return "Hello " + name;
     }
 
-    @WebMethod
-    public String hello(){
-        return "Hello World";
-    }
+//    @WebMethod
+//    public String hello(){
+//        return "Hello World";
+//    }
 }
