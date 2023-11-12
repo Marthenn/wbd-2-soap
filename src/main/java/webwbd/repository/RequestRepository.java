@@ -15,6 +15,8 @@ public class RequestRepository {
             request.setEmail(email);
             request.setProofDirectory(proofDirectory);
             request.setDate(new Date());
+            request.setStatus("Pending");
+            request.setDescription("");
 
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
