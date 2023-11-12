@@ -8,7 +8,7 @@ import webwbd.util.HibernateUtil;
 import java.util.Date;
 
 public class RequestRepository {
-    public Boolean createRequest(String username, String email, String proofDirectory) {
+    public String createRequest(String username, String email, String proofDirectory) {
         try {
             Request request = new Request();
             request.setUsername(username);
@@ -25,13 +25,13 @@ public class RequestRepository {
             session.save(request);
             session.getTransaction().commit();
 
-            return true;
+            return "Request created successfully";
         } catch (Exception e) {
-            return false;
+            return "Failed to create request";
         }
     }
 
-    public Boolean approveRequest(int id) {
+    public String approveRequest(int id) {
         try {
             // TODO: implement approveRequest
             /*
@@ -39,13 +39,13 @@ public class RequestRepository {
             * 2. Set status request menjadi Approved
             * 3. Set description jadi "Request approved by admin at {date}"
             * */
-            return true;
+            return "Request approved successfully";
         } catch (Exception e) {
-            return false;
+            return "Failed to approve request";
         }
     }
 
-    public Boolean declineRequest(int id) {
+    public String declineRequest(int id) {
         try {
             // TODO: implement declineRequest
             /*
@@ -53,9 +53,9 @@ public class RequestRepository {
              * 2. Set status request menjadi Declined
              * 3. Set description jadi "Request declined by admin at {date}. Cause: {cause}"
              * */
-            return true;
+            return "Request declined successfully";
         } catch (Exception e) {
-            return false;
+            return "Failed to decline request";
         }
     }
 }
