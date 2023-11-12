@@ -3,6 +3,7 @@ package webwbd.repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import webwbd.model.Request;
+import webwbd.model.Account;
 import webwbd.util.EmailUtil;
 import webwbd.util.HibernateUtil;
 
@@ -21,6 +22,27 @@ public class RequestRepository {
 
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
+
+            // check if username and email exists which means there's already a request
+            session.beginTransaction();
+            Request existingRequest = session.createQuery("from Request where username = :username or email = :email", Request.class)
+                    .setParameter("username", username)
+                    .setParameter("email", email)
+                    .uniqueResult();
+            if (existingRequest != null) {
+                return "Request already exists";
+            }
+
+            // check if username and email exists in account table and if it's admin
+            Account account = session.createQuery("from Account where username = :username or email = :email and isAdmin = True", Account.class)
+                    .setParameter("username", username)
+                    .setParameter("email", email)
+                    .uniqueResult();
+            if (account != null) {
+                return "An admin account with the same username or email already exists";
+            }
+
+            // TODO: add account exist here
 
             session.beginTransaction();
             session.save(request);
