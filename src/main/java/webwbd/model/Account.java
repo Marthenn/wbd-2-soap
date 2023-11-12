@@ -3,10 +3,23 @@ package webwbd.model;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 @Getter
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Account", propOrder = {
+        "id",
+        "username",
+        "password",
+        "email",
+        "joinedDate",
+        "expiredDate",
+        "isAdmin"
+})
 @Table(name = "account")
 public class Account {
     @Id
@@ -38,6 +51,6 @@ public class Account {
     private boolean isAdmin;
 
 
-    public Account(boolean isAdmin){this.isAdmin = isAdmin;}
+    public Account(int id, boolean isAdmin){this.id=id;this.isAdmin = isAdmin;}
     public Account(){this.isAdmin = false;}
 }
