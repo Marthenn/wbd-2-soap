@@ -3,6 +3,7 @@ package webwbd.repository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import webwbd.model.Request;
+import webwbd.util.EmailUtil;
 import webwbd.util.HibernateUtil;
 
 import java.util.Date;
@@ -24,6 +25,8 @@ public class RequestRepository {
             session.beginTransaction();
             session.save(request);
             session.getTransaction().commit();
+
+            EmailUtil.sendMail(email, "Request created successfully", "Your request has been created successfully. Please wait for the admin to approve your request.");
 
             return "Request created successfully";
         } catch (Exception e) {
