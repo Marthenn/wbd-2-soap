@@ -1,5 +1,6 @@
 package webwbd.middleware;
 
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.xml.ws.developer.JAXWSProperties;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,8 +13,6 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import javax.xml.ws.spi.http.HttpExchange;
-
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPPart;
 import javax.xml.soap.SOAPEnvelope;
@@ -41,7 +40,7 @@ public class LoggerServlet implements SOAPHandler<SOAPMessageContext> {
             Logging logging = new Logging();
             logging.setDescription(content);
             logging.setIpAddress(httpExchange.getRemoteAddress().getHostString());
-            logging.setEndpoint(httpExchange.getRequestURI());
+            logging.setEndpoint(httpExchange.getRequestURI().getPath());
             logging.setRequestTime(new java.util.Date());
 
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
