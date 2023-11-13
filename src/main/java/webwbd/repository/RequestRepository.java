@@ -15,7 +15,7 @@ import java.util.List;
 public class RequestRepository {
     private final static int PAGE_SIZE = 5;
 
-    public static String createRequest(String username, String email, String proofDirectory) {
+    public String createRequest(String username, String email, String proofDirectory) {
         try {
             Request request = new Request();
             request.setUsername(username);
@@ -68,7 +68,7 @@ public class RequestRepository {
         }
     }
 
-    public static String approveRequest(int id) {
+    public String approveRequest(int id) {
         try {
             // TODO: implement approveRequest
             /*
@@ -82,7 +82,7 @@ public class RequestRepository {
         }
     }
 
-    public static String declineRequest(int id) {
+    public String declineRequest(int id) {
         try {
             // TODO: implement declineRequest
             /*
@@ -96,14 +96,14 @@ public class RequestRepository {
         }
     }
 
-    public static Request getRequest(int id) {
+    public Request getRequest(String username) {
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
 
             session.beginTransaction();
-            Request request = session.createQuery("from Request where id = :id", Request.class)
-                    .setParameter("id", id)
+            Request request = session.createQuery("from Request where username = :username", Request.class)
+                    .setParameter("username", username)
                     .uniqueResult();
             session.getTransaction().commit();
 
@@ -113,7 +113,7 @@ public class RequestRepository {
         }
     }
 
-    public static RequestWrapper getRequestPage(int page) {
+    public RequestWrapper getRequestPage(int page) {
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
