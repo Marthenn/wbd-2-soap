@@ -28,12 +28,12 @@ public class Service {
     }
 
     @WebMethod(operationName = "ApproveRequest")
-    public String approveRequest(@WebParam(name = "id") int id,
+    public String approveRequest(@WebParam(name = "username") String username,
                                  @WebParam(name = "api_key") String apiKey) {
         if (!apiKey.equals(Dotenv.load().get("SOAP_KEY"))) {
             return "Not authorized";
         }
-        return RequestRepository.approveRequest(id);
+        return RequestRepository.approveRequest(username);
     }
 
     @WebMethod(operationName = "GetRequest")
