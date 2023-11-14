@@ -76,6 +76,8 @@ public class RequestRepository {
              * 2. Set status request menjadi Approved
              * 3. Set description jadi "Request approved by admin at {date}"
              * */
+            getRequest(id).setStatus("Approved");
+            getRequest(id).setDescription("Request approved by admin at " + new Date());
             return "Request approved successfully";
         } catch (Exception e) {
             return "Failed to approve request";
