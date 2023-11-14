@@ -70,7 +70,6 @@ public class RequestRepository {
 
     public String approveRequest(String username) {
         try {
-            // TODO: implement approveRequest
             /*
              * 1. Request id sudah ada (dari parameter)
              * 2. Set status request menjadi Approved
@@ -84,14 +83,15 @@ public class RequestRepository {
         }
     }
 
-    public String declineRequest(int id) {
+    public String declineRequest(String username) {
         try {
-            // TODO: implement declineRequest
             /*
              * 1. Request id sudah ada (dari parameter)
              * 2. Set status request menjadi Declined
              * 3. Set description jadi "Request declined by admin at {date}. Cause: {cause}"
              * */
+            getRequest(username).setStatus("Declined");
+            getRequest(username).setDescription("Request declined by admin at " + new Date());
             return "Request declined successfully";
         } catch (Exception e) {
             return "Failed to decline request";
