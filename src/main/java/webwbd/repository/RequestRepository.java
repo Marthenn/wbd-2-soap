@@ -7,6 +7,7 @@ import webwbd.model.Request;
 import webwbd.model.RequestWrapper;
 import webwbd.util.EmailUtil;
 import webwbd.util.HibernateUtil;
+import webwbd.util.PasswordUtil;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -75,8 +76,15 @@ public class RequestRepository {
              * 2. Set status request menjadi Approved
              * 3. Set description jadi "Request approved by admin at {date}"
              * */
+            Date date = new Date();
+
             getRequest(username).setStatus("Approved");
-            getRequest(username).setDescription("Request approved by admin at " + new Date());
+            getRequest(username).setDescription("Request approved by admin at " + date);
+
+            // TODO: send a request to REST to create account with the randomly generated password
+            String password = PasswordUtil.generateRandomPassword(20);
+            EmailUtil.sendMail(getRequest(username).getEmail(), "Request approved successfully", "Your request has been approved successfully at " + date + ". Your password is " + password + ". Please change the password ASAP.");
+
             return "Request approved successfully";
         } catch (Exception e) {
             return "Failed to approve request";
