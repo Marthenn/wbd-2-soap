@@ -1,15 +1,15 @@
 package webwbd.repository;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.Session;
-import webwbd.util.HibernateUtil;
+import org.hibernate.SessionFactory;
 import webwbd.model.Account;
 import webwbd.model.AccountWrapper;
+import webwbd.util.HibernateUtil;
 
 import java.util.List;
 
 public class AccountRepository {
-    public static String synchronizeAccounts(AccountWrapper accounts){
+    public String synchronizeAccounts(AccountWrapper accounts) {
         try {
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
@@ -17,13 +17,13 @@ public class AccountRepository {
             List<Account> accountsList = accounts.getAccounts();
 
             /*
-            * 1. Delete all accounts
-            * 2. Insert all accounts
-            * 3. Commit
-            * */
+             * 1. Delete all accounts
+             * 2. Insert all accounts
+             * 3. Commit
+             * */
             session.beginTransaction();
             session.createQuery("delete from Account").executeUpdate();
-            for(Account account : accountsList){
+            for (Account account : accountsList) {
                 session.save(account);
             }
             session.getTransaction().commit();

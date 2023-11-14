@@ -13,6 +13,9 @@ import javax.jws.WebService;
 
 @WebService
 public class Service {
+    private static final RequestRepository RequestRepository = new RequestRepository();
+    private static final AccountRepository AccountRepository = new AccountRepository();
+
     @WebMethod(operationName = "CreateRequest")
     public String createRequest(@WebParam(name = "username") String username,
                                 @WebParam(name = "email") String email,
@@ -34,12 +37,12 @@ public class Service {
     }
 
     @WebMethod(operationName = "GetRequest")
-    public Request getRequest(@WebParam(name = "id") int id,
+    public Request getRequest(@WebParam(name = "username") String username,
                               @WebParam(name = "api_key") String apiKey) {
         if (!apiKey.equals(Dotenv.load().get("SOAP_KEY"))) {
             return null;
         }
-        return RequestRepository.getRequest(id);
+        return RequestRepository.getRequest(username);
     }
 
     @WebMethod(operationName = "GetRequestPage")

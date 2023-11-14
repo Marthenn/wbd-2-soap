@@ -1,15 +1,38 @@
 version: '3.8'
+volumes:
+  db-soap:
+
 services:
   soap-service:
     container_name: jax-ws-webwbd-2
     build: .
     ports:
-      - "8011:8010"
+      - "50435:50435"
     env_file: .env
-    volumes:
-      - .:/usr/src/app
+    # volumes:
+    #   - .:/usr/src/app
     networks:
-      - soap-services
+      db-soapservice:
+    depends_on:
+      - db-mysql
+
+  db-mysql:
+    image: mysql:latest
+    restart: always
+    container_name: mysql-soap
+    ports:
+      - 50010:50010
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DB=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    hostname: db-rest-webwbd-2
+    volumes:
+      - db-soap:/var/lib/mysql
+      - ./dbinit/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      db-soapservice:
   
 networks:
-  soap-services:
+  db-soapservice:
