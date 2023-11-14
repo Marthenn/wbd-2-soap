@@ -102,9 +102,9 @@ public class RequestRepository {
             Session session = sessionFactory.getCurrentSession();
 
             session.beginTransaction();
-            Request request = session.createQuery("from Request where username = :username", Request.class)
+            Request request = session.createQuery("from Request where username = :username order by date desc", Request.class)
                     .setParameter("username", username)
-                    .uniqueResult();
+                    .getSingleResult();
             session.getTransaction().commit();
 
             return request;
