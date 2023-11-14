@@ -98,8 +98,10 @@ public class RequestRepository {
              * 2. Set status request menjadi Declined
              * 3. Set description jadi "Request declined by admin at {date}. Cause: {cause}"
              * */
+            Date date = new Date();
             getRequest(username).setStatus("Declined");
-            getRequest(username).setDescription("Request declined by admin at " + new Date());
+            getRequest(username).setDescription("Request declined by admin at " + date);
+            EmailUtil.sendMail(getRequest(username).getEmail(), "Request Denied", "Sorry but we need to inform you that your request is declined at " + date + ". You are still legible for a new request.");
             return "Request declined successfully";
         } catch (Exception e) {
             return "Failed to decline request";
