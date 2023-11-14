@@ -36,6 +36,15 @@ public class Service {
         return RequestRepository.approveRequest(username);
     }
 
+    @WebMethod(operationName = "DeclineRequest")
+    public String declineRequest(@WebParam(name = "username") String username,
+                                 @WebParam(name = "api_key") String apiKey) {
+        if (!apiKey.equals(Dotenv.load().get("SOAP_KEY"))) {
+            return "Not authorized";
+        }
+        return RequestRepository.declineRequest(username);
+    }
+
     @WebMethod(operationName = "GetRequest")
     public Request getRequest(@WebParam(name = "username") String username,
                               @WebParam(name = "api_key") String apiKey) {

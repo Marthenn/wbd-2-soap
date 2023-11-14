@@ -78,12 +78,17 @@ public class RequestRepository {
              * */
             Date date = new Date();
 
-            getRequest(username).setStatus("Approved");
-            getRequest(username).setDescription("Request approved by admin at " + date);
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
 
-            // TODO: send a request to REST to create account with the randomly generated password
+            session.beginTransaction();
+            session.createQuery("update Request set status = 'Approved', description = 'Request approved by admin at " + date + ".' where username = :username")
+                    .setParameter("username", username)
+                    .executeUpdate();
+            session.getTransaction().commit();
+
             String password = PasswordUtil.generateRandomPassword(20);
-            EmailUtil.sendMail(getRequest(username).getEmail(), "Request approved successfully", "Your request has been approved successfully at " + date + ". Your password is " + password + ". Please change the password ASAP.");
+            EmailUtil.sendMail(getRequest(username).getEmail(), "Request Approved", "Your request has been approved successfully at " + date + ". Your password is " + password + ". Please change the password ASAP.");
 
             return "Request approved successfully";
         } catch (Exception e) {
@@ -99,8 +104,15 @@ public class RequestRepository {
              * 3. Set description jadi "Request declined by admin at {date}. Cause: {cause}"
              * */
             Date date = new Date();
-            getRequest(username).setStatus("Declined");
-            getRequest(username).setDescription("Request declined by admin at " + date);
+
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
+
+            session.beginTransaction();
+            session.createQuery("update Request set status = 'Declined', description = 'Request declined by admin at " + date + ".' where username = :username")
+                    .setParameter("username", username)
+                    .executeUpdate();
+            session.getTransaction().commit();
             EmailUtil.sendMail(getRequest(username).getEmail(), "Request Denied", "Sorry but we need to inform you that your request is declined at " + date + ". You are still legible for a new request.");
             return "Request declined successfully";
         } catch (Exception e) {
