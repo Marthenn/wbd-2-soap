@@ -90,7 +90,7 @@ public class RequestRepository {
             String password = PasswordUtil.generateRandomPassword(20);
             EmailUtil.sendMail(getRequest(username).getEmail(), "Request Approved", "Your request has been approved successfully at " + date + ". Your password is " + password + ". Please change the password ASAP.");
 
-            return "Request approved successfully";
+            return "Request approved successfully. The password is " + password + ".";
         } catch (Exception e) {
             return "Failed to approve request";
         }
