@@ -4,6 +4,7 @@ volumes:
 
 services:
   db-mysql:
+    network_mode: "host"
     image: mysql:latest
     restart: always
     container_name: mysql-soap
@@ -19,10 +20,11 @@ services:
     volumes:
       - db-soap:/var/lib/mysql
       - ./dbinit/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      db-soapservice:
+  #    networks:
+  #      db-soapservice:
 
   soap-service:
+    network_mode: "host"
     container_name: jax-ws-webwbd-2
     restart: on-failure
     build: .
@@ -33,10 +35,10 @@ services:
     env_file: .env
     volumes:
       - .:/usr/src/app
-    networks:
-      db-soapservice:
+    #    networks:
+    #      db-soapservice:
     depends_on:
       - db-mysql
-  
-networks:
-  db-soapservice:
+
+#networks:
+#  db-soapservice:
