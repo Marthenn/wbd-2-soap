@@ -9,7 +9,7 @@
 
 ## Pembagian Tugas
 1. API Key: 13521144
-2. Database: 13521144
+2. Database: 13521144, 13521157
 3. ORM: 13521144
 4. Docker: 13521144, 13521157
 5. Email: 13521144
