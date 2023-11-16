@@ -3,36 +3,40 @@ volumes:
   db-soap:
 
 services:
-  soap-service:
-    container_name: jax-ws-webwbd-2
-    build: .
-    ports:
-      - "50435:50435"
-    env_file: .env
-    # volumes:
-    #   - .:/usr/src/app
-    networks:
-      db-soapservice:
-    depends_on:
-      - db-mysql
-
   db-mysql:
     image: mysql:latest
     restart: always
     container_name: mysql-soap
     ports:
-      - 50010:50010
+      - "50030:50030"
     environment:
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DB=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-    hostname: db-rest-webwbd-2
+      - MYSQL_TCP_PORT=${DB_PORT}
+    hostname: db-soap-webwbd-2
     volumes:
       - db-soap:/var/lib/mysql
       - ./dbinit/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       db-soapservice:
+
+  soap-service:
+    container_name: jax-ws-webwbd-2
+    restart: on-failure
+    build: .
+    expose:
+      - "50435"
+    ports:
+      - "50435:50435"
+    env_file: .env
+    volumes:
+      - .:/usr/src/app
+    networks:
+      db-soapservice:
+    depends_on:
+      - db-mysql
   
 networks:
   db-soapservice:
