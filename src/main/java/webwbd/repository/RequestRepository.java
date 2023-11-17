@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class RequestRepository {
-    private final static int PAGE_SIZE = 5;
+    private final static int PAGE_SIZE = 25;
 
     public String createRequest(String username, String email, String proofDirectory) {
         try {
