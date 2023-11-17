@@ -31,3 +31,29 @@ CREATE TABLE IF NOT EXISTS request (
 );
 
 GRANT ALL ON soapwebwbd.* TO 'dev';
+
+-- Inserting an admin account
+INSERT INTO account (username, password, email, joined_date, is_admin)
+VALUES ('admin_user', 'admin_password', 'admin@example.com', '2023-11-17', 1);
+
+-- Inserting two non-admin accounts
+INSERT INTO account (username, password, email, joined_date, is_admin)
+VALUES ('user1', 'password1', 'user1@example.com', '2023-11-17', 0),
+       ('user2', 'password2', 'user2@example.com', '2023-11-17', 0);
+
+-- Add 5 more rows for non-admin users
+INSERT INTO request (username, email, date, proof_directory, status, description)
+VALUES ('user1', 'user1@example.com', '2023-01-11', '/proofs/proof11.pdf', 'approved', 'Approved request description 11');
+
+INSERT INTO request (username, email, date, proof_directory, status, description)
+VALUES ('user2', 'user2@example.com', '2023-01-12', '/proofs/proof12.pdf', 'pending', 'Pending request description 12');
+
+INSERT INTO request (username, email, date, proof_directory, status, description)
+VALUES ('user1', 'user1@example.com', '2023-01-13', '/proofs/proof13.pdf', 'rejected', 'Rejected request description 13');
+
+INSERT INTO request (username, email, date, proof_directory, status, description)
+VALUES ('user2', 'user2@example.com', '2023-01-14', '/proofs/proof14.pdf', 'approved', 'Approved request description 14');
+
+INSERT INTO request (username, email, date, proof_directory, status, description)
+VALUES ('user1', 'user1@example.com', '2023-01-15', '/proofs/proof15.pdf', 'pending', 'Pending request description 15');
+
