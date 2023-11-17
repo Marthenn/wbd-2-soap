@@ -37,6 +37,7 @@ public class RequestRepository {
                     .setParameter("status", "Pending")
                     .uniqueResult();
             if (existingRequest != null) {
+                session.getTransaction().commit();
                 return "A pending request already exists";
             }
 
@@ -47,14 +48,17 @@ public class RequestRepository {
                     .uniqueResult();
             // if admin
             if (account != null && account.isAdmin()) {
+                session.getTransaction().commit();
                 return "Admin cannot create request";
             }
             // if exist an account but with different email
             if (account != null && !account.getEmail().equals(email)) {
+                session.getTransaction().commit();
                 return "Account with the specified username already exists with different email";
             }
             // if exist an account but with different username
             if (account != null && !account.getUsername().equals(username)) {
+                session.getTransaction().commit();
                 return "Account with the specified email already exists with different username";
             }
 

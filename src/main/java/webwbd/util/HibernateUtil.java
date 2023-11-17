@@ -1,7 +1,7 @@
 package webwbd.util;
 
-import org.hibernate.SessionFactory;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -32,7 +32,7 @@ public class HibernateUtil {
         configuration.addAnnotatedClass(Request.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-            .applySettings(configuration.getProperties()).build();
+                .applySettings(configuration.getProperties()).build();
         return (SessionFactory) configuration.buildSessionFactory(serviceRegistry);
     }
 
@@ -49,7 +49,9 @@ public class HibernateUtil {
     }
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) sessionFactory = buildSessionFactory();
+        if (sessionFactory == null) {
+            sessionFactory = buildSessionFactory();
+        }
         return sessionFactory;
     }
 }
